@@ -143,7 +143,7 @@ const Carousel = React.createClass({
       slideCount: nextProps.children.length
     });
     this.setDimensions(nextProps);
-    if (nextProps.slideIndex && nextProps.slideIndex !== this.state.currentSlide) {
+    if (typeof nextProps.slideIndex !== 'undefined' && nextProps.slideIndex !== this.state.currentSlide) {
       this.goToSlide(nextProps.slideIndex);
     }
     if (this.props.autoplay !== nextProps.autoplay) {
@@ -373,7 +373,7 @@ const Carousel = React.createClass({
     if (this.touchObject.length > (this.state.slideWidth / slidesToShow) / 5) {
       if (this.touchObject.direction === 1) {
         if (
-          this.state.currentSlide >= React.Children.count(this.props.children) - slidesToShow &&
+          this.state.currentSlide >= React.Children.count(this.props.children) - (this.props.cellAlign === 'center' ? 1 : slidesToShow) &&
           !this.props.wrapAround
         ) {
           this.animateSlide(tweenState.easingTypes[this.props.edgeEasing]);
@@ -508,7 +508,7 @@ const Carousel = React.createClass({
     if (this.props.slidesToScroll === 'auto') {
       slidesToShow = this.state.slidesToScroll;
     }
-    if (this.state.currentSlide >= childrenCount - slidesToShow && !this.props.wrapAround) {
+    if (this.state.currentSlide > childrenCount && !this.props.wrapAround) {
       return;
     }
 
@@ -519,7 +519,7 @@ const Carousel = React.createClass({
         return this.goToSlide(this.state.currentSlide + this.state.slidesToScroll);
       }
       this.goToSlide(
-        Math.min(this.state.currentSlide + this.state.slidesToScroll, childrenCount - slidesToShow)
+        Math.min(this.state.currentSlide + this.state.slidesToScroll, childrenCount - (this.props.cellAlign === 'center' ? 1 : slidesToShow))
       );
     }
   },
