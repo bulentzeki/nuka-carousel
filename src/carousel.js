@@ -349,12 +349,6 @@ const Carousel = React.createClass({
 
   handleClick(e) {
     if (this.clickSafe === true) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (e.nativeEvent) {
-        e.nativeEvent.stopPropagation();
-      }
     }
   },
 
