@@ -1,6 +1,6 @@
 {
   "name": "nuka-carousel",
-  "version": "2.0.2-patched",
+  "version": "2.0.2-patched2",
   "description": "Pure React Carousel",
   "main": "index.js",
   "dependencies": {
