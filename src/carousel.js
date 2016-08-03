@@ -138,6 +138,10 @@ const Carousel = React.createClass({
     }
   },
 
+  componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
+    this.setDimensions();
+  },
+
   componentWillReceiveProps(nextProps) {
     this.setState({
       slideCount: nextProps.children.length
@@ -674,17 +678,18 @@ const Carousel = React.createClass({
     if (props.slidesToScroll === 'auto') {
       slidesToScroll = Math.floor(frameWidth / (slideWidth + props.cellSpacing));
     }
-
-    this.setState({
-      slideHeight: slideHeight,
-      frameWidth: frameWidth,
-      slideWidth: slideWidth,
-      slidesToScroll: slidesToScroll,
-      left: props.vertical ? 0 : this.getTargetLeft(),
-      top: props.vertical ? this.getTargetLeft() : 0
-    }, function() {
-      self.setLeft()
-    });
+    if (this.state.slideHeight !== slideHeight) {
+      this.setState({
+        slideHeight: slideHeight,
+        frameWidth: frameWidth,
+        slideWidth: slideWidth,
+        slidesToScroll: slidesToScroll,
+        left: props.vertical ? 0 : this.getTargetLeft(),
+        top: props.vertical ? this.getTargetLeft() : 0
+      }, function() {
+        self.setLeft()
+      });
+    }
   },
 
   setLeft() {
